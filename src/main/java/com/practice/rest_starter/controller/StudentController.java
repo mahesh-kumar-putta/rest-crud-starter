@@ -3,16 +3,12 @@ package com.practice.rest_starter.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.practice.rest_starter.dto.Student;
-import com.practice.rest_starter.exception.StudentErrorResponse;
 import com.practice.rest_starter.exception.StudentNotFoundException;
 
 import jakarta.annotation.PostConstruct;
@@ -51,29 +47,6 @@ public class StudentController {
 		}
 		return studentList.get(id);
 	}
-	
-	@ExceptionHandler
-	public ResponseEntity<StudentErrorResponse> handleGenericException(Exception ex){
-		
-		StudentErrorResponse response = new StudentErrorResponse();
-		response.setErrorMessage(ex.getMessage());
-		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
-		response.setTimeStamp(System.currentTimeMillis());
-		
-		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	}
-	
-	@ExceptionHandler
-	public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException ex){
-		
-		StudentErrorResponse response = new StudentErrorResponse();
-		response.setErrorMessage(ex.getMessage());
-		response.setStatusCode(HttpStatus.NOT_FOUND.value());
-		response.setTimeStamp(System.currentTimeMillis());
-		
-		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-	}
-	
-	
+
 	
 }
